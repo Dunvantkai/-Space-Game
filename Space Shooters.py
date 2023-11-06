@@ -8,7 +8,14 @@ print("Kai's Space Shooter program")
 # render screen
 screen = pygame.display.set_mode((800, 600))
 
+#Titile
+pygame.display.set_caption("Kai's Space Shooters")
+icon = pygame.image.load('backdrop.png')
+pygame.display.set_icon(icon)
+
 #sub debug
+screen.fill((160, 160, 160))
+pygame.display.update()
 controlls = input("Press (i) to enable controlls debug:")
 if controlls == ("i"):
     controlls = True
@@ -16,10 +23,6 @@ else:
     controlls = False
 print("Game Starting")
 time.sleep(2)
-#Titile
-pygame.display.set_caption("Kai's Space Shooters")
-icon = pygame.image.load('backdrop.png')
-pygame.display.set_icon(icon)
 
 #background
 background = pygame.image.load('night sky.png')
@@ -29,8 +32,16 @@ playerIco = pygame.image.load('ship.png')
 playerX = 370
 playerY = 500
 playerX_change = 0
-score = 0
+# score = 0
 
+score_value = 0
+font = pygame.font.Font('celtic.ttf', 32)
+textX = 10
+textY = 10
+
+def show_score(x,y):
+    score = font.render("Score : " + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x, y))
 #enmy
 enmyIco = []
 enmyX = []
@@ -54,7 +65,7 @@ for e in range(numberOFenmy):
 bulletIco = pygame.image.load('bullet.png')
 bulletY = 500
 bulletX_chnage = 0
-bulletY_change = 0.2
+bulletY_change = 0.1
 bullet_state = "ready"
 #player render
 def player(x, y):
@@ -82,7 +93,6 @@ def Hitbox_math():
 # Tick game loop
 isRunning = True
 while isRunning:
-    screen.fill((160, 160, 160))
     screen.blit(background,(0 , 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -134,8 +144,8 @@ while isRunning:
             Hitbox_math()
             # kill check
             if hit_enmy == True:
-                score = score + 1
-                print("Your Score is:", score)
+                score_value = score_value + 1
+                # print("Your Score is:", score)
                 bullet_state = "ready"
                 bulletY = -40
                 enmyX[e] = random.randint(0, 736)
@@ -147,4 +157,5 @@ while isRunning:
         bullet_state = "ready"
         bulletY = 500
     player(playerX, playerY)
+    show_score(textX, textY)
     pygame.display.update()
