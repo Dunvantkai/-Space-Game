@@ -1,12 +1,21 @@
 import pygame
 import os
 import random
+import time
 pygame.init()
 os.system('cls')
 print("Kai's Space Shooter program")
 # render screen
 screen = pygame.display.set_mode((800, 600))
 
+#sub debug
+controlls = input("Press (i) to enable controlls debug:")
+if controlls == ("i"):
+    controlls = True
+else:
+    controlls = False
+print("Game Starting")
+time.sleep(2)
 #Titile
 pygame.display.set_caption("Kai's Space Shooters")
 icon = pygame.image.load('backdrop.png')
@@ -37,7 +46,7 @@ for e in range(numberOFenmy):
     enmyX.append (random.randint(0, 736))
     enmyY.append (random.randint(20, 80))
     enmyX_change.append (0.2)
-    enmyY_change.append (30)
+    enmyY_change.append (45)
     enmyXB.append (0)
     enmyYB.append (0)
 
@@ -81,24 +90,24 @@ while isRunning:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                print("KeyReg(Space)")
+                if controlls == True:  print("KeyReg(Space)")
                 if bullet_state == "ready":
                     fix_bullet_location = playerX
                 fire_bullet(fix_bullet_location, bulletY)
             elif event.key == pygame.K_LEFT:
-                print("KeyReg(Left)")
+                if controlls == True:  print("KeyReg(Left)")
                 playerX_change = -0.2
             elif event.key == pygame.K_RIGHT:
-                print("KeyReg(Right)")
+                if controlls == True:  print("KeyReg(Right)")
                 playerX_change = +0.2
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                print("KeyReg(Space Lifted)")
+                if controlls == True:  print("KeyReg(Space Lifted)")
             elif event.key == pygame.K_LEFT:
-                print("KeyReg(Left Lifted)")
+                if controlls == True:  print("KeyReg(Left Lifted)")
                 playerX_change = 0.0
             elif event.key == pygame.K_RIGHT:
-                print("KeyReg(Right Lifted)")
+                if controlls == True:  print("KeyReg(Right Lifted)")
                 playerX_change = 0.0
     #player walls
     playerX += playerX_change
@@ -109,12 +118,14 @@ while isRunning:
 
     #enmy edge of screen bons
     for e in range(numberOFenmy):
+        negEnmy = random.uniform(-0.3, -0.1)
+        posEnmy = random.uniform(0.3, 0.1)
         enmyX[e] += enmyX_change[e]
         if enmyX[e] > 738:
-            enmyX_change[e] = -0.1
+            enmyX_change[e] = negEnmy
             enmyY[e] += enmyY_change[e]
         if enmyX[e] < 0:
-            enmyX_change[e] = 0.1
+            enmyX_change[e] = posEnmy
             enmyY[e] += enmyY_change[e]
         if bullet_state == "fire":
             #bullet moves up  
