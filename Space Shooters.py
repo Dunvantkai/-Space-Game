@@ -2,6 +2,8 @@ import pygame
 import os
 import random
 import time
+from pygame import mixer
+
 pygame.init()
 os.system('cls')
 print("Kai's Space Shooter program")
@@ -26,14 +28,13 @@ time.sleep(2)
 
 #background
 background = pygame.image.load('night sky.png')
-
 #player
 playerIco = pygame.image.load('ship.png')
 playerX = 370
 playerY = 500
 playerX_change = 0
-# score = 0
 
+# score = 0
 score_value = 0
 font = pygame.font.Font('celtic.ttf', 32)
 textX = 10
@@ -51,6 +52,7 @@ enmyY_change = []
 enmyXB = []
 enmyYB = []
 numberOFenmy = 5
+enmyTO_ADD = 1
 
 for e in range(numberOFenmy):
     enmyIco.append (pygame.image.load('enmy.png'))
@@ -89,6 +91,8 @@ def Hitbox_math():
     hit_enmy = False
     if bulletX >= enmyX[e] and bulletX <= enmyXB[e] or bulletXB <= enmyXB[e] and bulletXB >= enmyX[e]:
         if bulletY >= enmyY[e] and bulletY <= enmyYB[e] or bulletYB <= enmyYB[e] and bulletYB >= enmyY[e]:
+            bang_sound = mixer.Sound('bang.wav')
+            bang_sound.play()
             hit_enmy = True
 # Tick game loop
 isRunning = True
@@ -103,6 +107,8 @@ while isRunning:
                 if controlls == True:  print("KeyReg(Space)")
                 if bullet_state == "ready":
                     fix_bullet_location = playerX
+                    bullet_Sound = mixer.Sound('shoot.wav')
+                    bullet_Sound.play()
                 fire_bullet(fix_bullet_location, bulletY)
             elif event.key == pygame.K_LEFT:
                 if controlls == True:  print("KeyReg(Left)")
@@ -128,6 +134,12 @@ while isRunning:
 
     #enmy edge of screen bons
     for e in range(numberOFenmy):
+        #game end
+        if enmyY[e] > 440:
+            print("You Died")
+            print("Your Final Score was:", score_value)
+            time.sleep(5)
+            isRunning = False
         negEnmy = random.uniform(-0.3, -0.1)
         posEnmy = random.uniform(0.3, 0.1)
         enmyX[e] += enmyX_change[e]
@@ -151,8 +163,10 @@ while isRunning:
                 enmyX[e] = random.randint(0, 736)
                 enmyY[e] = random.randint(20, 80)
         enmy(enmyX[e], enmyY[e], e)
-
-        #BULLET MOVE
+    #add more enmy
+    # if score_value == enmyTO_ADD:
+    #     numberOFenmy = numberOFenmy + 1
+    #     enmyTO_ADD = enmyTO_ADD + 25
     if bulletY <= -40:
         bullet_state = "ready"
         bulletY = 500
