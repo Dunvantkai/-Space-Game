@@ -23,11 +23,23 @@ playerX_change = 0
 score = 0
 
 #enmy
-enmyIco = pygame.image.load('enmy.png')
-enmyX = random.randint(0, 736)
-enmyY = random.randint(20, 80)
-enmyX_change = 0.1
-enmyY_change = 30
+enmyIco = []
+enmyX = []
+enmyY = []
+enmyX_change = []
+enmyY_change = []
+enmyXB = []
+enmyYB = []
+numberOFenmy = 5
+
+for e in range(numberOFenmy):
+    enmyIco.append (pygame.image.load('enmy.png'))
+    enmyX.append (random.randint(0, 736))
+    enmyY.append (random.randint(20, 80))
+    enmyX_change.append (0.2)
+    enmyY_change.append (30)
+    enmyXB.append (0)
+    enmyYB.append (0)
 
 #bullet
 bulletIco = pygame.image.load('bullet.png')
@@ -39,8 +51,8 @@ bullet_state = "ready"
 def player(x, y):
     screen.blit(playerIco, (x, y))
 #enmy render
-def enmy(x, y):
-    screen.blit(enmyIco, (x, y))
+def enmy(x, y, e):
+    screen.blit(enmyIco[e], (x, y))
 #bullet render
 def fire_bullet(x, y):
     global bullet_state
@@ -50,18 +62,18 @@ def fire_bullet(x, y):
 def Hitbox_math():
     global hit_enmy
     bulletX = fix_bullet_location
-    enmyXB = enmyX + 60
+    enmyXB[e] = enmyX[e] + 60
     bulletXB = bulletX + 60
-    enmyYB = enmyY + 60
+    enmyYB[e] = enmyY[e] + 60
     bulletYB = bulletY + 60
     hit_enmy = False
-    if bulletX >= enmyX and bulletX <= enmyXB or bulletXB <= enmyXB and bulletXB >= enmyX:
-        if bulletY >= enmyY and bulletY <= enmyYB or bulletYB <= enmyYB and bulletYB >= enmyY:
+    if bulletX >= enmyX[e] and bulletX <= enmyXB[e] or bulletXB <= enmyXB[e] and bulletXB >= enmyX[e]:
+        if bulletY >= enmyY[e] and bulletY <= enmyYB[e] or bulletYB <= enmyYB[e] and bulletYB >= enmyY[e]:
             hit_enmy = True
 # Tick game loop
 isRunning = True
 while isRunning:
-    # screen.fill((160, 160, 160))
+    screen.fill((160, 160, 160))
     screen.blit(background,(0 , 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -95,31 +107,33 @@ while isRunning:
     if playerX < -0:
         playerX = 0
 
-    enmyX += enmyX_change
     #enmy edge of screen bons
-    if enmyX > 738:
-        enmyX_change = -0.1
-        enmyY += enmyY_change
-    if enmyX < 0:
-        enmyX_change = 0.1
-        enmyY += enmyY_change
+    for e in range(numberOFenmy):
+        enmyX[e] += enmyX_change[e]
+        if enmyX[e] > 738:
+            enmyX_change[e] = -0.1
+            enmyY[e] += enmyY_change[e]
+        if enmyX[e] < 0:
+            enmyX_change[e] = 0.1
+            enmyY[e] += enmyY_change[e]
+        if bullet_state == "fire":
+            #bullet moves up  
+            fire_bullet(fix_bullet_location, bulletY)
+            bulletY -= bulletY_change
+            Hitbox_math()
+            # kill check
+            if hit_enmy == True:
+                score = score + 1
+                print("Your Score is:", score)
+                bullet_state = "ready"
+                bulletY = -40
+                enmyX[e] = random.randint(0, 736)
+                enmyY[e] = random.randint(20, 80)
+        enmy(enmyX[e], enmyY[e], e)
+
         #BULLET MOVE
     if bulletY <= -40:
         bullet_state = "ready"
         bulletY = 500
-      #bullet moves up  
-    if bullet_state == "fire":
-        fire_bullet(fix_bullet_location, bulletY)
-        bulletY -= bulletY_change
-        Hitbox_math()
-        # kill check
-        if hit_enmy == True:
-            score = score + 1
-            print("Your Score is:", score)
-            bullet_state = "ready"
-            bulletY = -40
-            enmyX = random.randint(0, 736)
-            enmyY = random.randint(20, 80)
     player(playerX, playerY)
-    enmy(enmyX, enmyY)
     pygame.display.update()
