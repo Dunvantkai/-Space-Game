@@ -18,16 +18,30 @@ pygame.display.set_icon(icon)
 #sub debug
 screen.fill((160, 160, 160))
 pygame.display.update()
-controlls = input("Press (i) to enable controlls debug:")
-if controlls == ("i"):
-    controlls = True
-else:
-    controlls = False
-print("Game Starting")
-time.sleep(2)
-
+print("Press (p) to start the Game")
+print("Press (i) to enable controlls debug")
+print("Press (u) to check file's struckers")
+controlls = False
+while True:
+    userinput = input(">")
+    if userinput == "p":
+        print("Game Starting")
+        time.sleep(2)
+        break
+    if userinput == "i":
+        print("Game Starting with KeyReg DeBug")
+        controlls = True
+        time.sleep(2)
+        break
+    if userinput == "u":
+        file = "night_sky.png"
+        if os.path.exists("file"):
+            print("hello")
+            file = "ship.png"
+            if os.path.exists("file"):
+                print("True")
 #background
-background = pygame.image.load('night sky.png')
+background = pygame.image.load('night_sky.png')
 #player
 playerIco = pygame.image.load('ship.png')
 playerX = 370
