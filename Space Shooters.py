@@ -7,17 +7,8 @@ from pygame import mixer
 pygame.init()
 os.system('cls')
 print("Kai's Space Shooter program")
-# render screen
-screen = pygame.display.set_mode((800, 600))
-
-#Titile
-pygame.display.set_caption("Kai's Space Shooters")
-icon = pygame.image.load('backdrop.png')
-pygame.display.set_icon(icon)
 
 #sub debug
-screen.fill((160, 160, 160))
-pygame.display.update()
 print("Press (p) to start the Game")
 print("Press (i) to enable controlls debug")
 print("Press (u) to check file's struckers")
@@ -35,11 +26,22 @@ while True:
         break
     if userinput == "u":
         file = "night_sky.png"
-        if os.path.exists("file"):
+        if os.path.exists(file):
             print("hello")
             file = "ship.png"
-            if os.path.exists("file"):
+            if os.path.exists(file):
                 print("True")
+
+
+# render screen
+screen = pygame.display.set_mode((800, 600))
+
+#Titile
+pygame.display.set_caption("Kai's Space Shooters")
+icon = pygame.image.load('backdrop.png')
+pygame.display.set_icon(icon)
+
+
 #background
 background = pygame.image.load('night_sky.png')
 #player
