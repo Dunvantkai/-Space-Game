@@ -27,10 +27,9 @@ while True:
     if userinput == "u":
         file = "night_sky.png"
         if os.path.exists(file):
-            print("hello")
             file = "ship.png"
             if os.path.exists(file):
-                print("True")
+                
 
 
 # render screen
