@@ -10,7 +10,7 @@ print("Kai's Space Shooter program")
 
 #sub debug
 print("Press (p) to start the Game")
-print("Press (i) to enable controlls debug")
+print("Press (i) to start game with controlls debug")
 print("Press (u) to check file's struckers")
 controlls = False
 while True:
@@ -23,14 +23,25 @@ while True:
         print("Game Starting with KeyReg DeBug")
         controlls = True
         time.sleep(2)
-        break
+        # break
     if userinput == "u":
-        file = "night_sky.png"
-        if os.path.exists(file):
-            file = "ship.png"
-            if os.path.exists(file):
-                
-
+        asssets =["night_sky.png", "ship.png", "shoot.wav", "bullet.png", "celtic.ttf", "bang.wav","enmy.png"]
+        Suckses = 0
+        failed = 0
+        for i in asssets: 
+            elements = i
+            if os.path.exists(elements):
+                print("The file", elements, "was found")
+                Suckses = Suckses + 1
+            else:
+                print("The file", elements, "was NOT found")
+                failed = failed + 1
+        print(Suckses, "were found and", failed, "were not found")
+        time.sleep(2)
+        print("")
+        print("Press (p) to start the Game")
+        print("Press (i) to start game with controlls debug")
+        print("Press (u) to check file's struckers")
 
 # render screen
 screen = pygame.display.set_mode((800, 600))
