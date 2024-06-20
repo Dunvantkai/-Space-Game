@@ -23,9 +23,9 @@ while True:
         print("Game Starting with KeyReg DeBug")
         controlls = True
         time.sleep(2)
-        # break
+        break
     if userinput == "u":
-        asssets =["night_sky.png", "ship.png", "shoot.wav", "bullet.png", "celtic.ttf", "bang.wav","enmy.png"]
+        asssets =["night_sky.png", "ship.png", "shoot.wav", "bullet.png", "celtic.ttf", "bang.wav","enmy.png","backdrop.png"]
         Suckses = 0
         failed = 0
         for i in asssets: 
@@ -36,13 +36,13 @@ while True:
             else:
                 print("The file", elements, "was NOT found")
                 failed = failed + 1
+        print("")
         print(Suckses, "were found and", failed, "were not found")
         time.sleep(2)
         print("")
         print("Press (p) to start the Game")
         print("Press (i) to start game with controlls debug")
         print("Press (u) to check file's struckers")
-
 # render screen
 screen = pygame.display.set_mode((800, 600))
 
