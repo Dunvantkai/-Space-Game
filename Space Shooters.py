@@ -5,15 +5,20 @@ import time
 from pygame import mixer
 
 pygame.init()
-os.system('cls')
-print("Kai's Space Shooter program")
 
-#sub debug
-print("Press (p) to start the Game")
-print("Press (i) to start game with controlls debug")
-print("Press (u) to check file's struckers")
+gamehard = 0
+
 controlls = False
 while True:
+    os.system('cls')
+    print("Kai's Space Shooter program")
+    print("The Games Current difficulty",gamehard)
+    print("")
+    #sub debug
+    print("Press (p) to start the Game")
+    print("Press (i) to start game with controlls debug")
+    print("Press (u) to check file's struckers")
+    print("Press (d) to change difficulty")
     userinput = input(">")
     if userinput == "p":
         print("Game Starting")
@@ -38,11 +43,25 @@ while True:
                 failed = failed + 1
         print("")
         print(Suckses, "were found and", failed, "were not found")
-        time.sleep(2)
-        print("")
-        print("Press (p) to start the Game")
-        print("Press (i) to start game with controlls debug")
-        print("Press (u) to check file's struckers")
+        time.sleep(6)
+    if userinput == "d":
+        while True:
+            os.system('cls')
+            print("please enter a difficulty")
+            print("")
+            print("enter (1) for deafault difficulty")
+            print("enter (2) for hard difficulty")
+            print("enter (3) for very hard")
+            userinput_gamehard = input(">")
+            if userinput_gamehard == "1":
+                gamehard = 0
+                break
+            if userinput_gamehard == "2":
+                gamehard = 5
+                break
+            if userinput_gamehard == "3":
+                gamehard = 10
+                break
 # render screen
 screen = pygame.display.set_mode((800, 600))
 
@@ -78,6 +97,7 @@ enmyY_change = []
 enmyXB = []
 enmyYB = []
 numberOFenmy = 5
+numberOFenmy = numberOFenmy + gamehard
 enmyTO_ADD = 1
 
 for e in range(numberOFenmy):
